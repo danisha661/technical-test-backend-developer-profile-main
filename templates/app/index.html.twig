@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% for rows in groups|batch(2, 'No item') %}
+        <div class="grid">
+            {% for group in rows %}
+                {% if group != 'No item' %}
+                    <div>
+                        <article>
+                            <p>{{ group.name }}</p>
+                            <span>{{ group.description }}</span>
+
+                            {% if group.members.count > 0 %}
+                                <details>
+                                    <summary>{{ 'Members'|trans }}</summary>
+                                    <ul>
+                                        {% for member in group.members %}
+                                            <li>
+                                                {{ member.firstname ~ ' ' ~ member.lastname }}&nbsp;&nbsp;
+                                                
+                                                {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                                    <a href="{{ path('member_edit', {id: member.id}) }}" class="blue" data-tooltip="{{ 'Edit member'|trans }}"><i class="bi bi-pencil-square"></i></a>&nbsp;
+                                                    <form action="{{ path('group_remove_member', {id: group.id}) }}" method="POST" class="form-inline-block">
+                                                        <input type="hidden" name="token" value="{{ csrf_token('remove_member') }}" />
+                                                        <input type="hidden" name="member" value="{{ member.id }}" />
+                                                        <button type="submit" class="orange" data-tooltip="{{ 'Remove member from group'|trans }}">
+                                                            <i class="bi bi-person-dash"></i>
+                                                        </button>
+                                                    </form>&nbsp;
+                                                    <form action="{{ path('member_delete', {id: member.id}) }}" method="POST" class="form-inline-block">
+                                                        <input type="hidden" name="token" value="{{ csrf_token('delete') }}" />
+                                                        <button type="submit" class="red" data-tooltip="{{ 'Delete member'|trans }}">
+                                                            <i class="bi bi-trash"></i>
+                                                        </button>
+                                                    </form>
+                                                {% endif %}
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </details>
+                            {% endif %}
+
+                            {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                <footer>
+                                    <a href="{{ path('group_edit', {id: group.id}) }}" role="button" class="secondary">{{ 'Edit group'|trans }}</a>
+
+                                    {% if is_granted('member_group_can_edit', group) %}
+                                        <form action="{{ path('group_delete', {id: group.id}) }}" method="POST" class="inline-block">
+                                            <input type="hidden" name="token" value="{{ csrf_token('delete') }}" />
+                                            <button type="submit">{{ 'Delete group'|trans }}</button>
+                                        </form>
+                                    {% endif %}
+                                </footer>
+                            {% endif %}
+                        </article>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endfor %}
+{% endblock %}

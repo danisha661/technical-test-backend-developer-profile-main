@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <article>
+        {{ form_start(form) }}
+            {{ form_rest(form) }}
+
+            <div class="grid">
+                <button type="submit" class="mb-0">{{ 'Submit'|trans }}</button>
+                <a href="{{ path('member_index') }}" role="button" class="secondary">{{ 'Cancel'|trans }}</a>
+            </div>
+        {{ form_end(form) }}
+    </article>
+{% endblock %}

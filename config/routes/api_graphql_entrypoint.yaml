@@ -1,0 +1,11 @@
+api_graphql_entrypoint:
+    path: '%app.api_route%/graphql'
+    controller: api_platform.graphql.action.entrypoint
+
+graphiql:
+    path: '%app.api_route%/docs/graphiql'
+    controller: api_platform.graphql.action.graphiql
+
+graphql_playground:
+    path: '%app.api_route%/docs/graphql_playground'
+    controller: api_platform.graphql.action.graphql_playground

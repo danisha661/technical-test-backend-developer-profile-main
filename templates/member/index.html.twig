@@ -1,0 +1,87 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'Members'|trans }} | {{ parent() }}{% endblock %}
+
+{% block body %}
+    <article>
+        {% if is_granted('ROLE_SUPER_ADMIN') %}
+            <p><a href="{{ path('member_create') }}" role="button">{{ 'Create member'|trans }}</a></p>
+            <hr>
+        {% endif %}
+
+        <table role="grid">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">{{ 'Firstname'|trans }}</th>
+                    <th scope="col">{{ 'Lastname'|trans }}</th>
+                    <th scope="col">{{ 'Groups'|trans }}</th>
+
+                    {% if is_granted('ROLE_SUPER_ADMIN') %}
+                        <th scope="col">{{ 'Actions'|trans }}</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for member in paginator.results %}
+                    <tr>
+                        <th scope="row">{{ member.id }}</th>
+                        <td>{{ member.firstname }}</td>
+                        <td>{{ member.lastname }}</td>
+                        <td>{{ member.memberGroups|join(' ♦ ') }}</td>
+
+                        {% if is_granted('ROLE_SUPER_ADMIN') %}
+                            <td>
+                                <a href="{{ path('member_edit', {id: member.id}) }}" class="blue" data-tooltip="{{ 'Edit member'|trans }}"><i class="bi bi-pencil-square"></i></a>&nbsp;
+                                <form action="{{ path('member_delete', {id: member.id}) }}" method="POST" class="form-inline-block">
+                                    <input type="hidden" name="token" value="{{ csrf_token('delete') }}" />
+                                    <button type="submit" class="red" data-tooltip="{{ 'Delete member'|trans }}">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        {% if paginator.hasToPaginate %}
+            <nav class="navigation text-center">
+                <ul class="pagination">
+                    {% if paginator.hasPreviousPage %}
+                        <li class="prev">
+                            <a href="{{ path('member_index_paginated', {page: paginator.previousPage}) }}" rel="previous">
+                                <i class="bi bi-arrow-left-short"></i> {{ 'Previous'|trans }}
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="prev disabled">
+                            <span><i class="bi bi-arrow-left-short"></i> {{ 'Previous'|trans }}</span>
+                        </li>
+                    {% endif %}
+
+                    {% for i in 1..paginator.lastPage %}
+                        {% if i == paginator.currentPage %}
+                            <li class="active"><span>{{ i }}</span></li>
+                        {% else %}
+                            <li><a href="{{ path('member_index_paginated', {page: i}) }}">{{ i }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if paginator.hasNextPage %}
+                        <li class="next">
+                            <a href="{{ path('member_index_paginated', {page: paginator.nextPage}) }}" rel="next">
+                                {{ 'Next'|trans }} <i class="bi bi-arrow-right-short"></i>
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="next disabled">
+                            <span>{{ 'Next'|trans }} <i class="bi bi-arrow-right-short"></i></span>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        {% endif %}
+    </article>
+{% endblock %}

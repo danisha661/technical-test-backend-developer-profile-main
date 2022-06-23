@@ -1,0 +1,146 @@
+/* Pink Light scheme (Default) */
+/* Can be forced with data-theme="light" */
+[data-theme="light"],
+:root:not([data-theme="dark"]) {
+    --primary: #d81b60;
+    --primary-hover: #c2185b;
+    --primary-focus: rgba(216, 27, 96, 0.125);
+    --primary-inverse: #FFF;
+    --blue: #0b5ed7;
+    --blue-hover: #0d6efd;
+    --orange: #ffc107;
+    --orange-hover: #ffca2c;
+}
+
+/* Pink Dark scheme (Auto) */
+/* Automatically enabled if user has Dark mode enabled */
+@media only screen and (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        --primary: #d81b60;
+        --primary-hover: #e91e63;
+        --primary-focus: rgba(216, 27, 96, 0.25);
+        --primary-inverse: #FFF;
+        --blue: #0b5ed7;
+        --blue-hover: #0d6efd;
+        --orange: #ffc107;
+        --orange-hover: #ffca2c;
+    }
+}
+
+/* Pink Dark scheme (Forced) */
+/* Enabled if forced with data-theme="dark" */
+[data-theme="dark"] {
+    --primary: #d81b60;
+    --primary-hover: #e91e63;
+    --primary-focus: rgba(216, 27, 96, 0.25);
+    --primary-inverse: #FFF;
+    --blue: #0b5ed7;
+    --blue-hover: #0d6efd;
+    --orange: #ffc107;
+    --orange-hover: #ffca2c;
+}
+
+/* Pink (Common styles) */
+:root {
+    --form-element-active-border-color: var(--primary);
+    --form-element-focus-color: var(--primary-focus);
+    --switch-color: var(--primary-inverse);
+    --switch-checked-background-color: var(--primary);
+}
+
+.theme-switcher[type=checkbox][role=switch] {
+    position: relative;
+}
+
+.theme-switcher[type=checkbox][role=switch]:before {
+    content: "🌝";
+    position: absolute;
+    top: -4px;
+    background: transparent;
+    left: -4px;
+}
+
+.theme-switcher[type=checkbox][role=switch]:checked:before {
+    content: "🌚";
+}
+
+.mb-0 {
+    margin-bottom: 0;
+}
+
+.inline-block,
+.form-inline-block {
+    display: inline-block;
+}
+
+.form-inline-block button {
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    border: none;
+}
+
+.required:after {
+    content: "*";
+    display: inline-block;
+    color: var(--primary);
+    margin-left: 2px
+}
+
+a.blue,
+.form-inline-block button.blue {
+    color: var(--blue);
+}
+
+a.blue:hover,
+.form-inline-block button.blue:hover {
+    color: var(--blue-hover);
+}
+
+a.orange,
+.form-inline-block button.orange {
+    color: var(--orange);
+}
+
+a.orange:hover,
+.form-inline-block button.orange:hover {
+    color: var(--orange-hover);
+}
+
+a.red,
+.form-inline-block button.red {
+    color: var(--primary);
+}
+
+a.red:hover,
+.form-inline-block button.red:hover {
+    color: var(--primary-hover);
+}
+
+a,
+a:hover {
+    text-decoration: none;
+}
+
+article {
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+}
+
+article>p {
+    font-weight: bold;
+    margin-bottom: .5rem;
+}
+
+article>span {
+    color: #7b7474;
+}
+
+article>details {
+    margin-top: 1rem;
+}
+
+article>footer {
+    margin-top: 1rem;
+    padding: 1rem;
+}

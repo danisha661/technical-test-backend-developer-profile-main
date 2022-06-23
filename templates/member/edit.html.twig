@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <article>
+        {{ form_start(form) }}
+            <h3 class="mb-0">{{ member.firstname ~ ' ' ~ member.lastname }}</h3>
+            <hr>
+
+            {{ form_rest(form) }}
+
+            <div class="grid">
+                <button type="submit" class="mb-0">{{ 'Submit'|trans }}</button>
+                <a href="{{ path('member_index') }}" role="button" class="secondary">{{ 'Cancel'|trans }}</a>
+            </div>
+        {{ form_end(form) }}
+    </article>
+{% endblock %}

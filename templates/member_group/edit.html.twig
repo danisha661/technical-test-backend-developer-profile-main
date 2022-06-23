@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <article>
+        {{ form_start(form) }}
+            <h3 class="mb-0">{{ group.name }}</h3>
+            <p>{{ group.description }}</p>
+            <hr>
+
+            {{ form_rest(form) }}
+
+            <div class="grid">
+                <button type="submit" class="mb-0">{{ 'Submit'|trans }}</button>
+                <a href="{{ path('app_home') }}" role="button" class="secondary">{{ 'Cancel'|trans }}</a>
+            </div>
+        {{ form_end(form) }}
+    </article>
+{% endblock %}
